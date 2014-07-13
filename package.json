@@ -1,0 +1,25 @@
+{
+  "name": "api",
+  "version": "0.0.1",
+  "description": "backend api",
+  "main": "app.js",
+  "scripts": {
+    "test": "make test"
+  },
+  "author": "fatelei@gmail.com",
+  "license": "BSD-2-Clause",
+  "dependencies": {
+    "express": "~4.2.0",
+    "mysql": "*",
+    "async": "*",
+    "validator": "*",
+    "cookie-session": ">=1.0.2",
+    "morgan": "~1.0.0",
+    "cookie-parser": "~1.0.1",
+    "body-parser": "~1.0.0",
+    "debug": "~0.7.4"
+  },
+  "devDependencies": {
+    "mocha": "*"
+  }
+}
