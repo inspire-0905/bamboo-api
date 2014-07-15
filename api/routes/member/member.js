@@ -9,6 +9,19 @@ var Member = require('../../models/member');
 var validate = require('../../utils/validate');
 var tools = require('../../utils/tools');
 
+router.param(function(name, fn){
+  if (fn instanceof RegExp) {
+    return function(req, res, next, val){
+      var captures;
+      if (captures = fn.exec(String(val))) {
+        req.params[name] = captures;
+        next();
+      } else {
+        next('route');
+      }
+    }
+  }
+});
 
 // GET whether the email has been used
 router.get("/check_email", function(req, res) {
@@ -47,8 +60,47 @@ router.get("/check_email", function(req, res) {
 
 
 // PUT update member info
+router.param('member_id', /^\d+$/);
 router.put("/:member_id", function(req, res) {
+  var headline = req.param('headline');
+  var nickname = req.param('nickname');
+  var member_id = req.params.member_id;
 
+  var updateValues = {};
+
+  if (typeof headline != 'undefined' && headline.length !== 0) {
+    updateValues.headline = headline;
+  }
+
+  if (typeof nickname != 'undefined' && nickname.length !== 0) {
+    updateValues.nickname = nickname;
+  }
+
+  if (Object.keys(updateValues).length !== 0) {
+    // update value
+    Member.updateMember(member_id, updateValues, function(err, rst) {
+      if (err) {
+        console.error(err);
+        res.json(500, {
+          err: '更新用户信息失败了，请重试！',
+          code: 50000
+        });
+      } else {
+        res.json({
+          err: '',
+          code: 0
+        });
+      }
+    });
+  } else {
+    // return immediately
+    res.json({
+      err: '',
+      code: 0
+    });
+  }
 });
+
+
 
 module.exports = router;

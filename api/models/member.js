@@ -5,9 +5,10 @@
 var dbPool = require("./db");
 
 // member object
-function Member(email, password) {
+function Member(email, password, realname) {
   this.email = email;
   this.password = password;
+  this.realname = realname;
 }
 
 module.exports = Member;
@@ -18,7 +19,8 @@ Member.prototype.createMember = function(callback) {
 
   var values = {
     email: that.email,
-    password: that.password
+    password: that.password,
+    realname: that.realname
   };
 
   dbPool.getConnection(function(err, connection) {

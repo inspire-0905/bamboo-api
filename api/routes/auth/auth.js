@@ -13,7 +13,6 @@ router.post('/login', function(req, res) {
   var email = req.param('email');
   var password = req.param('password');
 
-  console.log(email);
   Member.getMemberByEmail(email, function(err, member) {
     if (err) {
       res.json(500, {
@@ -51,10 +50,11 @@ router.post('/login', function(req, res) {
 router.post("/register", validate.validateRegister, function(req, res) {
   var email = req.param('email');
   var password = req.param('password');
+  var realname = req.param('realname');
 
   password = tools.hashPassword(password);
 
-  var member = new Member(email, password);
+  var member = new Member(email, password, realname);
 
   member.createMember(function (err, member_id) {
     if (err) {
