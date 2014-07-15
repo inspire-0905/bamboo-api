@@ -29,7 +29,7 @@ router.post('/login', function(req, res) {
         password = tools.hashPassword(password);
         if (password === member.password) {
           // Login successfully
-          req.session.uid = member.id;
+          res.cookie("m_id", member.id);
           res.json({
             err: '',
             code: 0
@@ -47,7 +47,7 @@ router.post('/login', function(req, res) {
 });
 
 // POST register new user
-router.post("/register", validate.validateRegister, function(req, res) {
+router.post('/register', validate.validateRegister, function(req, res) {
   var email = req.param('email');
   var password = req.param('password');
   var realname = req.param('realname');
@@ -59,16 +59,25 @@ router.post("/register", validate.validateRegister, function(req, res) {
   member.createMember(function (err, member_id) {
     if (err) {
       res.json(500, {
-        'err': '注册失败',
-        'code': 50000
+        err: '注册失败',
+        code: 50000
       });
     } else {
       res.json({
-        'err': '',
-        'code': 0,
-        'member_id': member_id
+        err: '',
+        code: 0,
+        member_id: member_id
       });
     }
+  });
+});
+
+// DELETE logout
+router.delete('/logout', function(req, res) {
+  res.clearCookie('m_id');
+  res.json({
+    err: '',
+    code: 0
   });
 });
 

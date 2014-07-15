@@ -14,6 +14,10 @@ API请求参数格式均为JSON
 		password: 用户密码(必须)
 		realname: 用户姓名(必须)
 
+### DELETE /auth/logout (用户注销)
+	param:
+		无
+
 ### GET /member/check_email (检测用户是否注册)
 	param:
 		email: 用户邮箱(必须)
@@ -29,4 +33,5 @@ API请求参数格式均为JSON
 +   code: 20001, 表示参数错误
 +   code: 20002, 表示查询用户不存在
 +   code: 20003, 表示密码错误
++	code: 20004, 禁止访问，权限相关
 +   code: 50000, 表示服务端错误
