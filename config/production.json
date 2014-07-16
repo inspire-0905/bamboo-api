@@ -4,7 +4,7 @@
         "port": 3306,
         "user": "root",
         "password": "123456",
-        "database": "test"
+        "database": "bamboo"
     },
     "key": "qw8r9214jnlrf7yu89dfn1.409j"
 }

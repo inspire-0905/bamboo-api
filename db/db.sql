@@ -1,3 +1,9 @@
+DROP DATABASE IF EXISTS bamboo;
+
+CREATE DATABASE IF NOT EXISTS bamboo DEFAULT CHARSET 'utf8';
+
+DROP TABLE IF EXISTS member;
+
 CREATE TABLE IF NOT EXISTS member (
     `id` INT NOT NULL AUTO_INCREMENT COMMENT '用户id',
     `realname` VARCHAR(5) NOT NULL COMMENT '真实姓名',
@@ -11,6 +17,7 @@ CREATE TABLE IF NOT EXISTS member (
     PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+DROP TABLE IF EXISTS circle;
 
 CREATE TABLE IF NOT EXISTS circle (
     `id` INT NOT NULL AUTO_INCREMENT COMMENT '圈子id',
@@ -21,6 +28,7 @@ CREATE TABLE IF NOT EXISTS circle (
     PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+DROP TABLE IF EXISTS article;
 
 CREATE TABLE IF NOT EXISTS article (
     `id` INT NOT NULL AUTO_INCREMENT COMMENT '文章id',
@@ -34,6 +42,7 @@ CREATE TABLE IF NOT EXISTS article (
     KEY `author_id` (`author_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+DROP TABLE IF EXISTS bookmark;
 
 CREATE TABLE IF NOT EXISTS bookmark (
     `id` INT NOT NULL AUTO_INCREMENT COMMENT '书签id',
@@ -45,6 +54,7 @@ CREATE TABLE IF NOT EXISTS bookmark (
     KEY `article_id` (`article_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+DROP TABLE IF EXISTS comment;
 
 CREATE TABLE IF NOT EXISTS comment (
     `id` INT NOT NULL AUTO_INCREMENT COMMENT '评论id',
@@ -56,6 +66,7 @@ CREATE TABLE IF NOT EXISTS comment (
     KEY `article_id` (`article_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+DROP TABLE IF EXISTS member_follow_circle;
 
 CREATE TABLE IF NOT EXISTS member_follow_circle (
     `id` INT NOT NULL AUTO_INCREMENT COMMENT 'id',
@@ -67,6 +78,7 @@ CREATE TABLE IF NOT EXISTS member_follow_circle (
     KEY `circle_id` (`circle_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+DROP TABLE IF EXISTS member_relationship;
 
 CREATE TABLE IF NOT EXISTS member_relationship (
     `id` INT NOT NULL AUTO_INCREMENT COMMENT 'id',
@@ -77,6 +89,7 @@ CREATE TABLE IF NOT EXISTS member_relationship (
     KEY `followed_member_id` (`followed_member_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+DROP TABLE IF EXISTS article_like;
 
 CREATE TABLE IF NOT EXISTS article_like (
     `id` INT NOT NULL AUTO_INCREMENT COMMENT 'id',
