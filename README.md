@@ -14,13 +14,20 @@ create database test default charset utf8;
 source db.sql
 ```
 
-## Deploy
+## Development
 ```
 > git clone git@github.com:inspire-0905/bamboo-api.git
 > cd bamboo-api
 > npm install
 > ln -s config/dev.json config/config.json
 > node bin/www
+```
+
+## Deploy
+```
+> cd bamboo-api
+> fab -R production upload
+> fab -R production restart
 ```
 
 ## License
