@@ -14,7 +14,7 @@ env.use_ssh_config = True
 
 @task
 def upload():
-    current_branch = local('git rev-parse --abbrev-ref HEAD')
+    current_branch = local('git rev-parse --abbrev-ref HEAD', capture=True)
     local('git push origin %s' % current_branch)
 
     with cd('/data/apps/bamboo-api'):
