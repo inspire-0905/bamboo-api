@@ -22,6 +22,10 @@ def upload():
         run('git reset --hard HEAD')
         run('git checkout origin/%s' % current_branch)
         run('npm install')
+        if env.host_string in env.roledefs['production']:
+            run('ln -sf /data/apps/bamboo-api/config/production.json /data/apps/bamboo-api/config.json')
+        else:
+            run('ln -sf /data/apps/bamboo-api/config/dev.json /data/apps/bamboo-api/config.json')
 
 @task
 def restart():
