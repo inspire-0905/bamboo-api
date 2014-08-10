@@ -15,13 +15,14 @@ router.post('/login', function(req, res) {
 
   Member.getMemberByEmail(email, function(err, member) {
     if (err) {
-      res.json(500, {
+      console.log(err);
+      res.json({
         err: '登录出错了，请重试！',
         code: 50000
       });
     } else {
       if (member === null) {
-        res.json(400, {
+        res.json({
           err: '用户不存在',
           code: 20002
         });
@@ -36,7 +37,7 @@ router.post('/login', function(req, res) {
           });
         } else {
           // Login failed
-          res.json(400, {
+          res.json({
             err: '密码错误',
             code: 20003
           });
@@ -58,7 +59,7 @@ router.post('/register', validate.validateRegister, function(req, res) {
 
   member.createMember(function (err, member_id) {
     if (err) {
-      res.json(500, {
+      res.json({
         err: '注册失败',
         code: 50000
       });

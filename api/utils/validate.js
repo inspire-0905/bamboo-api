@@ -13,7 +13,7 @@ exports.validateRegister = function(req, res, next) {
   var isEmail = validator.isEmail(email);
 
   if (!isEmail) {
-    return res.json(400, {
+    return res.json({
       err: '请填写正确的邮箱',
       code: 20001
     });
@@ -27,7 +27,7 @@ exports.validateRegister = function(req, res, next) {
   }
 
   if (typeof realname === 'undefined') {
-    return res.json(400, {
+    return res.json({
       err: '请填写正确姓名',
       code: 20001
     });
@@ -36,13 +36,13 @@ exports.validateRegister = function(req, res, next) {
   Member.isEmailExisted(email, function(err, isExisted) {
     if (err) {
       console.error(err);
-      return res.json(500, {
-        err: 服务器正在撰写文章,
+      return res.json({
+        err: '服务器正在撰写文章',
         code: 50000
       });
     } else {
       if (isExisted) {
-        return res.json(400, {
+        return res.json({
           err: '邮箱已经被注册，请更换邮箱',
           code: 20001
         });
@@ -57,7 +57,7 @@ exports.validateIsLogined = function(req, res, next) {
   var m_id = req.cookies.m_id;
 
   if (typeof m_id === 'undefined') {
-    return res.json(403, {
+    return res.json({
       err: '请先登录',
       code: 20004
     });

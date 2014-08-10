@@ -29,26 +29,26 @@ router.get("/check_email", function(req, res) {
   var isEmail = validator.isEmail(email);
 
   if (!isEmail) {
-    res.json(400, {
+    res.json({
       'err': '请填写正确的邮箱',
-      'code': 400
+      'code': 20001
     });
   } else {
     Member.isEmailExisted(email, function(err, isExisted) {
       if (err) {
         console.error(err);
-        res.json(500, {
+        res.json({
           'err': '服务器正在撰写文章',
-          'code': 500
+          'code': 50000
         });
       } else {
         if (isExisted) {
-          res.json(400, {
+          res.json({
             'err': '邮箱已经被注册，请更换邮箱',
-            'code': 400
+            'code': 20001
           });
         } else {
-          res.json(200, {
+          res.json({
             'err': '',
             'code': 0
           });
@@ -69,7 +69,7 @@ router.put("/:memberId", validate.validateIsLogined, function(req, res) {
   var loginId = req.cookies.m_id;
 
   if (loginId !== memberId) {
-    res.json(403, {
+    res.json({
       err: '无权修改他人信息',
       code: 20004
     });
@@ -89,7 +89,7 @@ router.put("/:memberId", validate.validateIsLogined, function(req, res) {
       Member.updateMember(member_id, updateValues, function(err, rst) {
         if (err) {
           console.error(err);
-          res.json(500, {
+          res.json({
             err: '更新用户信息失败了，请重试！',
             code: 50000
           });
