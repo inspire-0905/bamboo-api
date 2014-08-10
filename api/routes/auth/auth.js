@@ -17,13 +17,13 @@ router.post('/login', function(req, res) {
     if (err) {
       console.log(err);
       res.json({
-        err: '登录出错了，请重试！',
+        data: '登录出错了，请重试！',
         code: 50000
       });
     } else {
       if (member === null) {
         res.json({
-          err: '用户不存在',
+          data: '用户不存在',
           code: 20002
         });
       } else {
@@ -32,13 +32,13 @@ router.post('/login', function(req, res) {
           // Login successfully
           res.cookie("m_id", member.id);
           res.json({
-            err: '',
+            data: {},
             code: 0
           });
         } else {
           // Login failed
           res.json({
-            err: '密码错误',
+            data: '密码错误',
             code: 20003
           });
         }
@@ -60,14 +60,15 @@ router.post('/register', validate.validateRegister, function(req, res) {
   member.createMember(function (err, member_id) {
     if (err) {
       res.json({
-        err: '注册失败',
+        data: '注册失败',
         code: 50000
       });
     } else {
       res.json({
-        err: '',
         code: 0,
-        member_id: member_id
+        data: {
+          member_id: member_id
+        }
       });
     }
   });
@@ -77,7 +78,7 @@ router.post('/register', validate.validateRegister, function(req, res) {
 router.delete('/logout', function(req, res) {
   res.clearCookie('m_id');
   res.json({
-    err: '',
+    data: {},
     code: 0
   });
 });

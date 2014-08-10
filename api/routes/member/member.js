@@ -30,27 +30,27 @@ router.get("/check_email", function(req, res) {
 
   if (!isEmail) {
     res.json({
-      'err': '请填写正确的邮箱',
-      'code': 20001
+      data: '请填写正确的邮箱',
+      code: 20001
     });
   } else {
     Member.isEmailExisted(email, function(err, isExisted) {
       if (err) {
         console.error(err);
         res.json({
-          'err': '服务器正在撰写文章',
-          'code': 50000
+          data: '服务器正在撰写文章',
+          code: 50000
         });
       } else {
         if (isExisted) {
           res.json({
-            'err': '邮箱已经被注册，请更换邮箱',
-            'code': 20001
+            data: '邮箱已经被注册，请更换邮箱',
+            code: 20001
           });
         } else {
           res.json({
-            'err': '',
-            'code': 0
+            data: {},
+            code: 0
           });
         }
       }
@@ -70,7 +70,7 @@ router.put("/:memberId", validate.validateIsLogined, function(req, res) {
 
   if (loginId !== memberId) {
     res.json({
-      err: '无权修改他人信息',
+      data: '无权修改他人信息',
       code: 20004
     });
   } else {
@@ -90,12 +90,12 @@ router.put("/:memberId", validate.validateIsLogined, function(req, res) {
         if (err) {
           console.error(err);
           res.json({
-            err: '更新用户信息失败了，请重试！',
+            data: '更新用户信息失败了，请重试！',
             code: 50000
           });
         } else {
           res.json({
-            err: '',
+            data: {},
             code: 0
           });
         }
@@ -103,7 +103,7 @@ router.put("/:memberId", validate.validateIsLogined, function(req, res) {
     } else {
       // return immediately
       res.json({
-        err: '',
+        data: {},
         code: 0
       });
     }
