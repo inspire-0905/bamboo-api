@@ -3,7 +3,7 @@
 ## API List
 API请求参数格式均为JSON
 
-### GET / (Index)
+### GET /feeds (feeds)
 	param:
 		无
 

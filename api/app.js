@@ -9,7 +9,7 @@ var session = require('cookie-session');
 // routers
 var member = require('./routes/member/member');
 var auth = require('./routes/auth/auth');
-var index = require('./routes/index/index');
+var feed = require('./routes/feed/feed');
 
 var app = express();
 
@@ -31,7 +31,7 @@ app.all('*', function(req, res, next) {
 	next();
 });
 
-app.use(index);
+app.use(feed);
 app.use('/auth', auth);
 app.use('/member', member);
 

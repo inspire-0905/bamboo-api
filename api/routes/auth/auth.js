@@ -30,7 +30,10 @@ router.post('/login', function(req, res) {
         password = tools.hashPassword(password);
         if (password === member.password) {
           // Login successfully
-          res.cookie("m_id", member.id, {signed: true});
+          res.cookie("m_id", member.id, {
+            signed: true,
+            maxAge: 2592000000
+          });
           res.json({
             data: {},
             code: 0
@@ -64,7 +67,10 @@ router.post('/register', validate.validateRegister, function(req, res) {
         code: 50000
       });
     } else {
-      res.cookie("m_id", member_id, {signed: true});
+      res.cookie("m_id", member_id, {
+        signed: true,
+        maxAge: 2592000000
+      });
       res.json({
         code: 0,
         data: {}
