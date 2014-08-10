@@ -16,9 +16,12 @@ var app = express();
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded());
-app.use(cookieParser());
+app.use(cookieParser('dasuhdi678123hbeis781309MFDSUF8934'));
 app.use(session({
-  secret: 'dasuhdi678123hbeis781309MFDSUF8934'
+  secret: 'dasuhdi678123hbeis781309MFDSUF8934',
+  cookie: {
+  	secure: true
+  }
 }));
 
 app.all('*', function(req, res, next) {

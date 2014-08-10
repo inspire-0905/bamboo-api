@@ -66,7 +66,7 @@ router.put("/:memberId", validate.validateIsLogined, function(req, res) {
   var nickname = req.param('nickname');
   var memberId = req.params.member_id;
 
-  var loginId = req.cookies.m_id;
+  var loginId = req.signedCookies.m_id;
 
   if (loginId !== memberId) {
     res.json({
