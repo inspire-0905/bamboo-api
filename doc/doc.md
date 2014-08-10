@@ -3,6 +3,10 @@
 ## API List
 API请求参数格式均为JSON
 
+### GET / (Index)
+	param:
+		无
+
 ### POST /auth/login (用户登录)
 	param:
 		email: 用户邮箱(必须)
