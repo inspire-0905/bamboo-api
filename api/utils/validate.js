@@ -20,7 +20,7 @@ exports.validateRegister = function(req, res, next) {
   }
 
   if (password.length < 6 || password.length > 16) {
-    return res.json(400, {
+    return res.json({
       err: '密码长度需在6-16个字符',
       code: 20001
     });
