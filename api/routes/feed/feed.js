@@ -1,0 +1,23 @@
+/*
+ * Index handler
+ */
+
+var express = require('express');
+var router = express.Router();
+
+router.get('/feeds', function(req, res) {
+  var memberId = req.signedCookies.m_id;
+  if (typeof memberId === 'undefined') {
+    res.json({
+      err: 0,
+      data: {}
+    });
+  } else {
+    res.json({
+      err: 0,
+      data: {}
+    });
+  }
+});
+
+module.exports = router;
