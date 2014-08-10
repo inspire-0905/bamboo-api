@@ -1,9 +1,9 @@
 {
     "database": {
-        "host": "54.179.155.72",
+        "host": "localhost",
         "port": 3306,
-        "user": "bamboo",
-        "password": "pwdforbamboo",
+        "user": "root",
+        "password": "123456",
         "database": "bamboo"
     },
     "key": "qw8r9214jnlrf7yu89dfn1.409j"
