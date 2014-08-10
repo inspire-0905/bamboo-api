@@ -64,11 +64,10 @@ router.post('/register', validate.validateRegister, function(req, res) {
         code: 50000
       });
     } else {
+      res.cookie("m_id", member_id);
       res.json({
         code: 0,
-        data: {
-          member_id: member_id
-        }
+        data: {}
       });
     }
   });
