@@ -1,5 +1,5 @@
 /*
- * user model
+ * User model
  */
 
 var dbPool = require("./db");

@@ -1,9 +1,23 @@
 # Backend
 
+## 基本数据格式
+
+### feed数据格式
+```
+title: 文章标题
+excerpt: 文章简介
+author: 文章作者信息，包括：name（用户名），avatar（用户头像地址）
+viewCounts: 阅读次数
+likedCounts: 被赞次数
+created: 文章发表时间
+figureTitle: 题图地址
+```
+
+
 ## API List
 API请求参数格式均为JSON
 
-### GET /feeds (feeds)
+### GET /feeds (首页动态)
 	param:
 		无
 

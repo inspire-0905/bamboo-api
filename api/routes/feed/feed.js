@@ -3,6 +3,7 @@
  */
 
 var express = require('express');
+var feed = require('../../models/feed');
 var router = express.Router();
 
 router.get('/feeds', function(req, res) {
@@ -13,9 +14,18 @@ router.get('/feeds', function(req, res) {
       data: {}
     });
   } else {
-    res.json({
-      err: 0,
-      data: {}
+    feed.getIndexFeeds(memberId, function(err, data) {
+      if (err) {
+        res.json({
+          err: 50000,
+          data: err,
+        });
+      } else {
+        res.json({
+          err: 0,
+          data: data
+        });
+      }
     });
   }
 });
