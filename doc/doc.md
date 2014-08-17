@@ -30,7 +30,6 @@ API请求参数格式均为JSON
 	param:
 		email: 用户邮箱(必须)
 		password: 用户密码(必须)
-		realname: 用户姓名(必须)
 
 ### DELETE /auth/logout (用户注销)
 	param:
