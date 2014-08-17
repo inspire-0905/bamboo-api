@@ -8,10 +8,10 @@ mysql >= 5.5.6
 
 ## Initial database
 ```
-cd bamboo-api/db
-mysql -uuser -ppassword
-create database test default charset utf8;
-source db.sql
+> cd bamboo-api/db
+> mysql -uuser -ppassword < db.sql
+> cd ..
+> node bin/initdb
 ```
 
 ## Development
