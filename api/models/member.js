@@ -123,3 +123,25 @@ Member.getMemberById = function(memberId, callback) {
     }
   });
 };
+
+// Whether the member is active
+Member.isActive = function(memberId, callback) {
+  dbPool.getConnection(function(err, connection) {
+    if (err) {
+      return callback(err, null);
+    } else {
+      var sql = 'SELECT is_active FROM member WHERE id = ?';
+      connection.query(sql, [memberId], function(err, rst) {
+        if (err) {
+          return callback(err, null);
+        } else {
+          if (rst.length !== 0) {
+            return callback(null, rst[0].is_active);
+          } else {
+            return callback(null, null);
+          }
+        }
+      });
+    }
+  });
+};

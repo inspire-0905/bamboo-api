@@ -45,15 +45,55 @@ exports.validateRegister = function(req, res, next) {
   });
 };
 
+/*
+ * Validate whether the user is logined
+ */
 exports.validateIsLogined = function(req, res, next) {
   var m_id = req.cookies.m_id;
 
   if (typeof m_id === 'undefined') {
     return res.json({
-      err: '请先登录',
+      data: '请先登录',
       code: 20004
     });
   } else {
     next();
+  }
+};
+
+/*
+ * Validate whether the user is active
+ */
+exports.validateIsActive = function(req, res, next) {
+  var m_id = req.cookies.m_id;
+
+  if (typeof m_id === 'undefined') {
+    return res.json({
+      data: '请先登录',
+      code: 20004
+    });
+  } else {
+    Member.isActive(m_id, function(err, isActive) {
+      if (err) {
+        return res.json({
+          data: '服务器正在撰写文章',
+          code: 50000
+        });
+      } else {
+        if (isActive === null) {
+          return res.json({
+            data: '用户不存在',
+            code: 20002
+          });
+        } else if (isActive === 0) {
+          return res.json({
+            data: '请先激活账号',
+            code: 20004
+          });
+        } else {
+          next();
+        }
+      }
+    });
   }
 };

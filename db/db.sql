@@ -15,6 +15,7 @@ CREATE TABLE IF NOT EXISTS member (
     `email` VARCHAR(20) UNIQUE COMMENT '邮箱',
     `created` INT UNSIGNED NOT NULL COMMENT '注册时间',
     `status` TINYINT DEFAULT 0 COMMENT '用户状态',
+    `is_active` TINYINT DEFAULT 0 COMMENT '用户是否激活',
     `is_deleted` TINYINT DEFAULT 0 COMMENT '是否销毁',
     `avatar_path` VARCHAR(200) NULL COMMENT '头像地址',
     PRIMARY KEY (`id`)
