@@ -5,10 +5,9 @@
 var dbPool = require("./db");
 
 // member object
-function Member(email, password, realname) {
+function Member(email, password) {
   this.email = email;
   this.password = password;
-  this.realname = realname;
 }
 
 module.exports = Member;
@@ -19,15 +18,15 @@ Member.prototype.createMember = function(callback) {
 
   var values = {
     email: that.email,
-    password: that.password,
-    realname: that.realname
+    password: that.password
   };
 
   dbPool.getConnection(function(err, connection) {
     if (err) {
       return callback(err, null);
     } else {
-      connection.query('INSERT INTO member SET ?', values, function(err, rst) {
+      var sql = 'INSERT INTO member SET ?';
+      connection.query(sql, values, function(err, rst) {
         connection.release();
         if (err) {
           return callback(err, null);
@@ -45,7 +44,8 @@ Member.isEmailExisted = function(email, callback) {
     if (err) {
       return callback(err, null);
     } else {
-      connection.query('SELECT id FROM member WHERE email = ?', [email], function(err, rst) {
+      var sql = 'SELECT id FROM member WHERE email = ?';
+      connection.query(sql, [email], function(err, rst) {
         connection.release();
         if (err) {
           return callback(err, null);
@@ -66,7 +66,8 @@ Member.updateMember = function(member_id, updateValues, callback) {
     if (err) {
       return callback(err, null);
     } else {
-      connection.query('UPDATE member SET ? WHERE id = ?', [updateValues, member_id], function(err, rst) {
+      var sql = 'UPDATE member SET ? WHERE id = ?';
+      connection.query(sql, [updateValues, member_id], function(err, rst) {
         connection.release();
         if (err) {
           return callback(err, null);
@@ -84,7 +85,8 @@ Member.getMemberByEmail = function(email, callback) {
     if (err) {
       return callback(err, null);
     } else {
-      connection.query('SELECT * FROM member WHERE email = ?', [email], function(err, rst) {
+      var sql = 'SELECT * FROM member WHERE email = ?';
+      connection.query(sql, [email], function(err, rst) {
         connection.release();
         if (err) {
           return callback(err, null);
@@ -93,6 +95,28 @@ Member.getMemberByEmail = function(email, callback) {
             return callback(null, rst[0]);
           } else {
             return callback(null, null);
+          }
+        }
+      });
+    }
+  });
+};
+
+// Get member by member id
+Member.getMemberById = function(memberId, callback) {
+  dbPool.getConnection(function(err, connection) {
+    if (err) {
+      return callback(err, null);
+    } else {
+      var sql = 'SELECT * FROM member WHERE id = ?';
+      connection.query(sql, [memberId], function(err, rst) {
+        if (err) {
+          return callback(err, null);
+        } else {
+          if (rst.length === 0) {
+            return callback(null, null);
+          } else {
+            return callback(null, rst[0])
           }
         }
       });

@@ -54,11 +54,10 @@ router.post('/login', function(req, res) {
 router.post('/register', validate.validateRegister, function(req, res) {
   var email = req.param('email');
   var password = req.param('password');
-  var realname = req.param('realname');
 
   password = tools.hashPassword(password);
 
-  var member = new Member(email, password, realname);
+  var member = new Member(email, password);
 
   member.createMember(function (err, member_id) {
     if (err) {

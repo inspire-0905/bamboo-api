@@ -16,6 +16,7 @@ CREATE TABLE IF NOT EXISTS member (
     `created` INT UNSIGNED NOT NULL COMMENT '注册时间',
     `status` TINYINT DEFAULT 0 COMMENT '用户状态',
     `is_deleted` TINYINT DEFAULT 0 COMMENT '是否销毁',
+    `avatar_path` VARCHAR(200) NULL COMMENT '头像地址',
     PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -35,11 +36,13 @@ DROP TABLE IF EXISTS article;
 CREATE TABLE IF NOT EXISTS article (
     `id` INT NOT NULL AUTO_INCREMENT COMMENT '文章id',
     `title` VARCHAR(100) NOT NULL COMMENT '文章标题',
-    `title_image` VARCHAR(100) NULL COMMENT '文章题图',
+    `figure_title` VARCHAR(200) NULL COMMENT '文章题图',
     `content` TEXT NOT NULL COMMENT '文章内容',
     `author_id` INT NOT NULL COMMENT '作者id',
     `created` INT UNSIGNED NOT NULL COMMENT '创建时间',
     `is_published` TINYINT DEFAULT 0 COMMENT '是否发布',
+    `read_count` INT DEFAULT 0 COMMENT '阅读数',
+    `like_count` INT DEFAULT 0 COMMENT '赞同数',
     PRIMARY KEY (`id`),
     KEY `author_id` (`author_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
