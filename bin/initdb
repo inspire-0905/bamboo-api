@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 var initDB = require('../scripts/init_db');
 
 initDB();
