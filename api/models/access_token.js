@@ -107,3 +107,31 @@ AccessToken.revoke = function(access_token, callback) {
     }
   });
 };
+
+/*
+ * Get the member'id by access token
+ */
+AccessToken.getMemberIdByAccessToken = function(accessToken, callback) {
+  var sql = null;
+  var memberId = null;
+
+  dbPool.getConnection(function(err, conn) {
+    if (err) {
+      return callback(err, null);
+    } else {
+      sql = 'SELECT member_id FROM access_token WHERE access_token = ?';
+      conn.query(sql, [accessToken], function(err, rst) {
+        // Release connection
+        conn.release();
+        if (err) {
+          return callback(err, null);
+        } else {
+          if (rst.length !== 0) {
+            memberId = rst[0].member_id;
+          }
+          return callback(null, memberId);
+        }
+      });
+    }
+  });
+}; 
