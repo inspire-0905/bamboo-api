@@ -105,3 +105,16 @@ CREATE TABLE IF NOT EXISTS article_like (
     KEY `member_id` (`member_id`),
     KEY `article_id` (`article_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+DROP TABLE IF EXISTS access_token;
+
+CREATE TABLE IF NOT EXISTS access_token (
+    `id` INT NOT NULL AUTO_INCREMENT COMMENT 'id',
+    `access_token` VARCHAR(64) NOT NULL COMMENT 'access token',
+    `member_id` INT NOT NULL COMMENT '用户id',
+    `expired_at` INT NOT NULL COMMENT '过期时间',
+    `is_deleted` TINYINT DEFAULT 0 COMMENT '是否清除',
+    `created_at` INT NOT NULL COMMENT '登录时间',
+    PRIMARY KEY (`id`),
+    KEY `access_token` (`access_token`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;

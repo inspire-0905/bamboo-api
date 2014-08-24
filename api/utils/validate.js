@@ -4,6 +4,8 @@
 
 var validator = require('validator');
 var Member = require('../models/member');
+var AccessToken = require('../models/access_token');
+
 
 exports.validateRegister = function(req, res, next) {
   var email = req.param('email');
@@ -49,15 +51,55 @@ exports.validateRegister = function(req, res, next) {
  * Validate whether the user is logined
  */
 exports.validateIsLogined = function(req, res, next) {
-  var m_id = req.cookies.m_id;
+  var authorization = req.headers['Authorization'];
 
-  if (typeof m_id === 'undefined') {
+  if (typeof authorization === 'undefined') {
     return res.json({
       data: '请先登录',
       code: 20004
     });
   } else {
+    var tmp = authorization.split(' ');
+    if (tmp[0] !== 'Bearer') {
+      return res.json({
+        data: '不合法的请求',
+        code: 20006
+      });
+    } else {
+      AccessToken.checkAccessTokenIsValid(tmp[1], function(err, isValid) {
+        if (err) {
+          return res.json({
+            data: '服务器正在撰写文章',
+            code: 50000
+          });
+        } else {
+          if (isValid) {
+            next();
+          } else {
+            return res.json({
+              data: '登录过期',
+              code: 20005
+            });
+          }
+        }
+      });
+    }
+  }
+};
+
+/*
+ * Validate whether the user isn't logined
+ */
+exports.validateIsNotLogined = function(req, res, next) {
+  var authoriztion = req.headers['Authorization'];
+
+  if (typeof authorization === 'undefined') {
     next();
+  } else {
+    res.json({
+      data: '已经登录，无需此操作',
+      err: 20006
+    });
   }
 };
 

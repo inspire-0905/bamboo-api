@@ -58,6 +58,23 @@ router.get("/check_email", function(req, res) {
   }
 });
 
+router.param('memberId', /^\d+$/);
+router.get('/:memberId', validate.validateIsLogined, function(req, res) {
+  Member.getMemberById(req.params.member_id, function(err, member) {
+    if (err) {
+      res.json({
+        data: '更新用户信息失败了，请重试！',
+        code: 50000
+      });
+    } else {
+      delete member.password;
+      res.json({
+        data: member,
+        code: 0
+      });
+    }
+  });
+});
 
 // PUT update member info
 router.param('memberId', /^\d+$/);
@@ -82,7 +99,7 @@ router.put("/:memberId", validate.validateIsLogined, function(req, res) {
 
     if (typeof nickname != 'undefined' && nickname.length !== 0) {
       updateValues.nickname = nickname;
-    }
+    }''
 
     if (Object.keys(updateValues).length !== 0) {
       // update value

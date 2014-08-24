@@ -6,10 +6,15 @@ var express = require('express');
 var router = express.Router();
 
 var Member = require('../../models/member');
+var AccessToken = require('../../models/access_token');
 var tools = require('../../utils/tools');
 var validate = require('../../utils/validate');
 
-router.post('/login', function(req, res) {
+/*
+ * HTTP method POST
+ * Login api
+ */
+router.post('/login', validate.validateIsNotLogined, function(req, res) {
   var email = req.param('email');
   var password = req.param('password');
 
@@ -30,13 +35,20 @@ router.post('/login', function(req, res) {
         password = tools.hashPassword(password);
         if (password === member.password) {
           // Login successfully
-          res.cookie("m_id", member.id, {
-            signed: true,
-            maxAge: 2592000000
-          });
-          res.json({
-            data: {},
-            code: 0
+          // return access_token
+          var at = new AccessToken(member.id);
+          at.save(function(err, rst) {
+            if (err) {
+              res.json({
+                data: '登录出错了，请重试！',
+                code: 50000
+              });
+            } else {
+              res.json({
+                data: rst,
+                code: 0
+              });
+            }
           });
         } else {
           // Login failed
@@ -50,8 +62,12 @@ router.post('/login', function(req, res) {
   });
 });
 
-// POST register new user
-router.post('/register', validate.validateRegister, function(req, res) {
+/*
+ * HTTP method POST
+ * Register api
+ */
+router.post('/register', validate.validateIsNotLogined,
+  validate.validateRegister, function(req, res) {
   var email = req.param('email');
   var password = req.param('password');
 
@@ -66,24 +82,45 @@ router.post('/register', validate.validateRegister, function(req, res) {
         code: 50000
       });
     } else {
-      res.cookie("m_id", member_id, {
-        signed: true,
-        maxAge: 2592000000
-      });
-      res.json({
-        code: 0,
-        data: {}
+      var at = new AccessToken(member_id);
+      at.save(function(err, rst) {
+        if (err) {
+          res.json({
+            data: '注册失败',
+            code: 50000
+          });
+        } else {
+          res.json({
+            code: 0,
+            data: rst
+          });
+        }
       });
     }
   });
 });
 
-// DELETE logout
-router.delete('/logout', function(req, res) {
-  res.clearCookie('m_id');
-  res.json({
-    data: {},
-    code: 0
+
+/*
+ * HTTP method DELETE
+ * Logout api
+ */
+router.delete('/logout', validate.validateIsLogined, function(req, res) {
+  var authorization = req.headers['Authorization'];
+  var access_token = authorization.split(' ')[1];
+
+  AccessToken.revoke(access_token, function(err, rst) {
+    if (err) {
+      res.json({
+        data: '注销失败了',
+        code: 50000
+      });
+    } else {
+      res.json({
+        data: {},
+        code: 0
+      });
+    }
   });
 });
 

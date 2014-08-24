@@ -25,11 +25,17 @@ API请求参数格式均为JSON
 	param:
 		email: 用户邮箱(必须)
 		password: 用户密码(必须)
+	return:
+	    access_token: 访问令牌
+	    expired_at: 过期时间
 
 ### POST /auth/register (用户注册)
 	param:
 		email: 用户邮箱(必须)
 		password: 用户密码(必须)
+    return:
+	    access_token: 访问令牌
+	    expired_at: 过期时间
 
 ### DELETE /auth/logout (用户注销)
 	param:
@@ -38,6 +44,17 @@ API请求参数格式均为JSON
 ### GET /member/check_email (检测用户是否注册)
 	param:
 		email: 用户邮箱(必须)
+		
+### GET /member/member_id
+    param:
+        无
+    return;
+        realname: 真实姓名
+        nickname: 用户昵称
+        headline: 个人简介
+        email: 邮箱地址
+        created: 注册时间
+        avatar_path: 用户头像地址
 
 ### PUT /member/member_id (更新用户信息)
 	param:
@@ -50,5 +67,11 @@ API请求参数格式均为JSON
 +   code: 20001, 表示参数错误
 +   code: 20002, 表示查询用户不存在
 +   code: 20003, 表示密码错误
-+	code: 20004, 禁止访问，权限相关
++	code: 20004, 没有访问权限
++   code: 20005, access_token过期
++   code: 20006, 禁止操作
++   code: 20006, 错误的头部信息
 +   code: 50000, 表示服务端错误
+
+
+
