@@ -11,15 +11,24 @@ CREATE TABLE IF NOT EXISTS member (
     `realname` VARCHAR(5) NOT NULL COMMENT '真实姓名',
     `password` VARCHAR(40) NOT NULL COMMENT '密码',
     `nickname` VARCHAR(10) NULL COMMENT '昵称',
-    `headline` VARCHAR(50) NULL COMMENT '简介',
+    `introduction` VARCHAR(150) DEFAULT NULL COMMENT '简介',
+    `motto` VARCHAR(150) DEFAULT NULL COMMENT 'motto',
     `email` VARCHAR(20) UNIQUE COMMENT '邮箱',
     `created` INT UNSIGNED NOT NULL COMMENT '注册时间',
     `status` TINYINT DEFAULT 0 COMMENT '用户状态',
     `is_active` TINYINT DEFAULT 0 COMMENT '用户是否激活',
     `is_deleted` TINYINT DEFAULT 0 COMMENT '是否销毁',
     `avatar_path` VARCHAR(200) NULL COMMENT '头像地址',
+    `zhihu` VARCHAR(150) DEFAULT NULL COMMENT 'zhihu',
+    `weibo` VARCHAR(150) DEFAULT NULL COMMENT 'sina weibo',
+    `douban` VARCHAR(150) DEFAULT NULL COMMENT 'douban',
+    `pixiv` VARCHAR(150) DEFAULT NULL COMMENT 'pixiv',
+    `github` VARCHAR(150) DEFAULT NULL COMMENT 'github',
+    `dribbble` VARCHAR(150) DEFAULT NULL COMMENT `dribbble`,
+    `site` VARCHAR(150) DEFAULT NULL COMMENT 'person site',
     PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
 
 DROP TABLE IF EXISTS circle;
 

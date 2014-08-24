@@ -56,10 +56,24 @@ API请求参数格式均为JSON
         created: 注册时间
         avatar_path: 用户头像地址
 
-### PUT /member/member_id (更新用户信息)
+### PUT /member/profile (更新用户信息)
 	param:
 		nickname: 用户昵称(可选)
-		headline: 用户简介(可选)
+		moto: 座右铭(可选)
+		introduction: 个人简介(可选) 
+		zhihu: 知乎个人网址(可选)
+		douban:　豆瓣个人网址(可选)
+		pixiv: pixiv个人网址(可选)
+		dribbble: dribbble个人网址(可选)
+		weibo: 微博个人网址(可选)
+		github: github个人网址(可选)
+		person_site: inkpaper个性网址(可选)
+		
+### PUT /member/password（更新用户密码）
+    param:
+        old_password: 用户旧密码
+        new_password: 用户新密码
+        confirm_new_password: 新密码确认
 
 ## Error Code Introduction
 

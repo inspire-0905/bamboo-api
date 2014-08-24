@@ -3,6 +3,7 @@
  */
 
 var validator = require('validator');
+var tools = require('./tools');
 var Member = require('../models/member');
 var AccessToken = require('../models/access_token');
 
@@ -96,7 +97,7 @@ exports.validateIsNotLogined = function(req, res, next) {
   if (typeof authorization === 'undefined') {
     next();
   } else {
-    res.json({
+    return res.json({
       data: '已经登录，无需此操作',
       err: 20006
     });
@@ -134,6 +135,63 @@ exports.validateIsActive = function(req, res, next) {
           });
         } else {
           next();
+        }
+      }
+    });
+  }
+};
+
+exports.validateUpdateProfile = function(req, res, next) {
+  var nickname = req.param('nickname');
+
+  if (typeof nickname === 'undefined') {
+    return res.json({
+      data: '表示参数错误',
+      code: 20001
+    });
+  } else {
+    next();
+  }
+};
+
+exports.validateUpdatePassword = function(req, res, next) {
+  var newPassword = req.param('new_password');
+  var confirmNewPassword = req.param('confirm_new_password');
+  var Authorization = req.headers['Authorization'];
+  var oldPassword = req.param('old_password');
+
+  var accessToken = Authorization.split(' ')[1];
+
+  if (newPassword !== confirmNewPassword || typeof oldPassword === 'undefined') {
+    return res.json({
+      data: '修改的密码不一致',
+      code: 20001
+    });
+  } else {
+    AccessToken.getMemberIdByAccessToken(accessToken, function(err, memberId) {
+      if (err) {
+        return res.json({
+          data: '服务器正在撰写文章',
+          err: 50000
+        });
+      } else {
+        if (memberId !== null) {
+          Member.getMemberById(memberId, function(err, member) {
+            var hashPassword = tools.hashPassword(oldPassword);
+            if (hashPassword !== member.password) {
+              return res.json({
+                data: '无权修改',
+                err: 20006
+              });
+            } else {
+              next();
+            }
+          });
+        } else {
+          return res.json({
+            data: '用户不存在',
+            code: 20002
+          });
         }
       }
     });
