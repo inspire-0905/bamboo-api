@@ -24,7 +24,7 @@ CREATE TABLE IF NOT EXISTS member (
     `douban` VARCHAR(150) DEFAULT NULL COMMENT 'douban',
     `pixiv` VARCHAR(150) DEFAULT NULL COMMENT 'pixiv',
     `github` VARCHAR(150) DEFAULT NULL COMMENT 'github',
-    `dribbble` VARCHAR(150) DEFAULT NULL COMMENT `dribbble`,
+    `dribbble` VARCHAR(150) DEFAULT NULL COMMENT 'dribbble',
     `site` VARCHAR(150) DEFAULT NULL COMMENT 'person site',
     PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;

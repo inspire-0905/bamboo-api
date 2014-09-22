@@ -4,7 +4,7 @@
 
 var crypto = require('crypto');
 var uuid = require('node-uuid');
-var config = require('../../config/config.json');
+var config = require('../../config/dev.json');
 
 exports.hashPassword = function(password) {
   var sha1 = crypto.createHmac('sha1', config.key);
